@@ -17,7 +17,7 @@ class TypeResolverTest {
         List<DocTag> tags = Arrays.stream(tagValues)
                 .map(DocTag::new)
                 .toList();
-        PhpDocBlock docBlock = new PhpDocBlock(Map.of("var", tags));
+        PhpDocBlock docBlock = new PhpDocBlock(Map.of("@var", tags));
         return new PhpVariable(name, docBlock);
     }
 
