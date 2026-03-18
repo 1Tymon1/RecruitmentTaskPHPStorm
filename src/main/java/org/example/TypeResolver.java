@@ -33,7 +33,7 @@ public class TypeResolver {
 
                 // Handling mismatched variable names
                 if (!name.equals(variable.getName())) {
-                    return typeFactory.createPhpType("mixed");
+                    continue;
                 }
             }
 
@@ -50,6 +50,7 @@ public class TypeResolver {
             }
         }
 
-        return typeFactory.createPhpType("placeholder");
+        // Handling no matching variable names
+        return typeFactory.createPhpType("mixed");
     }
 }
