@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TypeResolver {
@@ -24,8 +25,29 @@ public class TypeResolver {
         }
 
         for (DocTag tag : tags) {
+            String partsOfTag[] = tag.getValue().split(" ");
 
-            return typeFactory.createPhpType(tag.getValue());
+            String types[] = partsOfTag[0].split("\\|");
+            if (partsOfTag.length >= 2) {
+                String name = partsOfTag[1];
+
+                // Handling mismatched variable names
+                if (!name.equals(variable.getName())) {
+                    return typeFactory.createPhpType("mixed");
+                }
+            }
+
+            // Standard case handling
+            if (types.length == 1) {
+                return typeFactory.createPhpType(types[0]);
+            }
+            else { // Union case handling
+                List<PhpType> typesForUnion = new ArrayList<PhpType>();
+                for (String type : types) {
+                    typesForUnion.add(typeFactory.createPhpType(type));
+                }
+                return typeFactory.createUnionType(typesForUnion);
+            }
         }
 
         return typeFactory.createPhpType("placeholder");
