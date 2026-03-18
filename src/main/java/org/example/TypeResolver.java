@@ -23,6 +23,11 @@ public class TypeResolver {
             return typeFactory.createPhpType("mixed");
         }
 
+        for (DocTag tag : tags) {
+
+            return typeFactory.createPhpType(tag.getValue());
+        }
+
         return typeFactory.createPhpType("placeholder");
     }
 }
